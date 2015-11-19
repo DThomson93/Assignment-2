@@ -15,17 +15,35 @@ public class GUI implements ActionListener {
 	JFrame frame = new JFrame("Place Your Bets!");
 	JPanel mainMenuPanel = new JPanel();
 	JPanel placeBetPanel = new JPanel();
+	JPanel fMatches = new JPanel();
+	JPanel bMatches = new JPanel();
+	JPanel hRaces = new JPanel();
 	JPanel checkResultsPanel = new JPanel();
 	JPanel horsePanel = new JPanel();
+	JPanel matchPanel = new JPanel();
 
 	JButton mainMenuBtn = new JButton("Main Menu.");
 	JButton placeBetBtn = new JButton("Place Bet");
 	JTextField choice1 = new JTextField("Choose your sport");
+	JButton boxBtn = new JButton("Boxing");
+	JButton footBtn = new JButton("Football");
+	JButton hrseBtn = new JButton("Horses");
+	JButton[] venueList = new JButton[6];
+	JButton match1 = new JButton("");
+	JButton match2 = new JButton("");
+	JButton match3 = new JButton("");
+	JButton[] teamList = new JButton[2];
+	JButton[] fighterList = new JButton[2];
+	JButton[] horseList = new JButton[10];
+	JTextField playerList = new JTextField("");
 	String[] sportTypes = { "Horses", "Football", "Boxing" };
+	String[] tempMatch = new String[2];
+	String[] tempRace = new String[10];
 	JComboBox sports = new JComboBox(sportTypes);
 	JTextField amField = new JTextField("Amount");
 	JTextField enAmount = new JTextField();
 	JComboBox betChoices = new JComboBox(HorseBet.getHorses());
+	JButton nextBtn = new JButton("Continue");
 	JButton submitBtn = new JButton("Submit");
 	JButton checkResultsBtn = new JButton("Check your results");
 	JTextArea printList = new JTextArea();
@@ -35,20 +53,20 @@ public class GUI implements ActionListener {
 
 	public GUI() {
 
-		// ---Basic Settings---//
+		// ---Basic Settings--- //
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(190, 200);
 
-		// ---Action Listeners---//
+		// ---Action Listeners--- //
 		placeBetBtn.addActionListener(this);
 		checkResultsBtn.addActionListener(this);
 		exitBtn.addActionListener(this);
 		sports.addActionListener(this);
-		submitBtn.addActionListener(this);
+		nextBtn.addActionListener(this);
 		printReceipt.addActionListener(this);
 		mMenu.addActionListener(this);
 
-		// ---Main Menu---//
+		// ---Main Menu--- //
 		mainMenuPanel.setLayout(null);
 
 		mainMenuPanel.add(placeBetBtn);
@@ -61,29 +79,45 @@ public class GUI implements ActionListener {
 
 		frame.add(mainMenuPanel);
 		frame.setVisible(true);
-		// ---End Main Menu---//
+		// ---End Main Menu--- //
 
-		// ---Place Bet Menu---//
+		// ---Initial Sport/Match Choice Menu--- //
 		placeBetPanel.setLayout(null);
 		placeBetPanel.add(choice1);
-		placeBetPanel.add(sports);
-		placeBetPanel.add(amField);
-		placeBetPanel.add(enAmount);
-		placeBetPanel.add(betChoices);
-		placeBetPanel.add(submitBtn);
+		placeBetPanel.add(boxBtn);
+		placeBetPanel.add(footBtn);
+		placeBetPanel.add(hrseBtn);
+		placeBetPanel.add(nextBtn);
 
 		choice1.setEditable(false);
-		amField.setEditable(false);
 
 		choice1.setBounds(10, 10, 150, 20);
-		sports.setBounds(10, 35, 150, 20);
-		amField.setBounds(10, 60, 150, 20);
-		enAmount.setBounds(10, 85, 150, 20);
-		betChoices.setBounds(10, 110, 150, 20);
-		submitBtn.setBounds(10, 135, 150, 20);
-		// ---End Place Bet Menu---//
-
-		// ---Check Results Menu---//
+		boxBtn.setBounds(10, 35, 150, 20);
+		footBtn.setBounds(10, 60, 150, 20);
+		hrseBtn.setBounds(10, 85, 150, 20);
+		nextBtn.setBounds(180, 135, 150, 20);
+		// ---End Initial Sport/Match Menu--- //
+		
+		
+		// ---Elaborate Match Menu--- //
+		bMatches.setLayout(null);
+		venueList[0].setText("");
+		bMatches.add(venueList[0]);
+		match1.setBounds(10, 10, 150, 20);
+		
+		fMatches.setLayout(null);
+		venueList[1].setText("");
+		fMatches.add(venueList[1]);
+		match1.setBounds(10, 10, 150, 20);
+		
+		hRaces.setLayout(null);
+		venueList[2].setText("");
+		hRaces.add(venueList[2]);
+		match1.setBounds(10, 10, 150, 20);
+		
+		
+		// ---End Elaborate Match Menu ---//
+		// ---Check Results Menu--- //
 		checkResultsPanel.setLayout(null);
 		checkResultsPanel.add(printList);
 		printList.setEditable(false);
@@ -93,7 +127,7 @@ public class GUI implements ActionListener {
 		printList.setBounds(10, 10, 150, 20);
 		printReceipt.setBounds(10, 35, 150, 20);
 		mMenu.setBounds(10, 60, 150, 20);
-		// ---End Check Results Menu---//
+		// ---End Check Results Menu--- //
 
 	}
 
@@ -111,6 +145,20 @@ public class GUI implements ActionListener {
 			switchMenu("Quit");
 		} else if (e.getSource() == sports) {
 			changeBetChoices((String) sports.getSelectedItem());
+		} else if (e.getSource() == nextBtn) {
+			switchMenu("Next");
+		} else if (e.getSource() == boxBtn) {
+			switchMenu("BoxingMatches");
+		} else if (e.getSource() == footBtn) {
+			switchMenu("FootMatches");
+		} else if (e.getSource() == hrseBtn) {
+			switchMenu("HorseMatches");
+		} else if (e.getSource() == venueList[0]) {
+			switchMenu("Cheltenham");
+		} else if (e.getSource() == venueList[1]) {
+			switchMenu("CrokePark");
+		} else if (e.getSource() == venueList[2]) {
+			switchMenu("NationalStadium");
 		} else if (e.getSource() == submitBtn) {
 			switchMenu("Submit");
 		} else if (e.getSource() == mMenu) {
@@ -130,10 +178,62 @@ public class GUI implements ActionListener {
 		 */
 		double amount = 0;
 		if (menu == "Place Bet") {
+			frame.setSize(500, 200);
 			mainMenuPanel.setVisible(false);
 			frame.add(placeBetPanel);
 			placeBetPanel.setVisible(true);
 			enAmount.setText("");
+		} else if (menu == "BoxingMatches") {
+			frame.setSize(190, 200);
+			placeBetPanel.setVisible(false);
+			frame.add(bMatches);
+			bMatches.setVisible(true);
+			venueList[0].setText("National Stadium");
+		} else if (menu == "FootMatches") {
+			frame.setSize(190, 200);
+			placeBetPanel.setVisible(false);
+			frame.add(fMatches);
+			fMatches.setVisible(true);
+			venueList[1].setText("Croke Park");
+		} else if (menu == "HorseMatches") {
+			frame.setSize(190, 200);
+			placeBetPanel.setVisible(false);
+			frame.add(hRaces);
+			hRaces.setVisible(true);
+			venueList[2].setText("Cheltenham");
+		} else if (menu == "Cheltenham") {
+			match1.setText("");
+			placeBetPanel.remove(match1);
+			tempRace = HorseBet.getHorses();
+			horseList[0].setText(tempRace[0]);
+			horseList[1].setText(tempRace[1]);
+			horseList[2].setText(tempRace[2]);
+			horseList[3].setText(tempRace[3]);
+			horseList[4].setText(tempRace[4]);
+			horseList[5].setText(tempRace[5]);
+			horseList[6].setText(tempRace[6]);
+			horseList[7].setText(tempRace[7]);
+			horseList[8].setText(tempRace[8]);
+			horseList[9].setText(tempRace[9]);
+			placeBetPanel.add(horseList[0]);
+			placeBetPanel.add(horseList[1]);
+			placeBetPanel.add(horseList[2]);
+			placeBetPanel.add(horseList[3]);
+			placeBetPanel.add(horseList[4]);
+			placeBetPanel.add(horseList[5]);
+			placeBetPanel.add(horseList[6]);
+			placeBetPanel.add(horseList[7]);
+			placeBetPanel.add(horseList[8]);
+			placeBetPanel.add(horseList[9]);
+		} else if (menu == "CrokePark") {
+			match1.setText("");
+			tempMatch = FootballBet.randomFootballMatch();
+			teamList[0].setText(tempMatch[0]);
+			teamList[1].setText(tempMatch[1]);
+			placeBetPanel.add(teamList[0]);
+			placeBetPanel.add(teamList[1]);
+		} else if (menu == "NationalStadium") {
+			match1.setText("");
 		} else if (menu == "Check Results") {
 			mainMenuPanel.setVisible(false);
 			frame.add(checkResultsPanel);
@@ -155,6 +255,7 @@ public class GUI implements ActionListener {
 			try {
 				frame.remove(placeBetPanel);
 				mainMenuPanel.setVisible(true);
+				frame.setSize(190,200);
 				String check = (String) sports.getSelectedItem();
 				//Original placement --- int amount = 0;
 				amount = Double.parseDouble(enAmount.getText());

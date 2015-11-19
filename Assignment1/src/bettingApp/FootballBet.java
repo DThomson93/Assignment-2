@@ -34,4 +34,33 @@ public class FootballBet extends Bet {
 	public String getType() {
 		return type;
 	}
+	
+	public static String[] randomFootballMatch() {
+		getFirst();
+		getSecond();
+		
+		String firstT = getFirst();
+		String secondT = getSecond();
+		
+		if (firstT.equals(secondT)) {
+			secondT = teams[generateRandom()];
+		}
+		
+		String tempBoxers[] = {firstT, secondT};
+		
+		return tempBoxers;
+		
+	}
+	
+	public static String getFirst() {
+		String[] tempMatch = teams;
+		String fTeam = tempMatch[generateRandom()];
+		return fTeam;
+	}
+	
+	public static String getSecond() {
+		String[] tempMatch = teams;
+		String sTeam = tempMatch[generateRandom()];
+		return sTeam;
+	}
 }
