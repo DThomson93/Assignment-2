@@ -36,10 +36,10 @@ public class GUI implements ActionListener {
 		JButton hrseBtn = new JButton("Horses");
 			JButton match3 = new JButton("");
 			JButton[] horseList = new JButton[10];
-	String[] sportTypes = { "Horses", "Football", "Boxing" };
+	//String[] sportTypes = { "Horses", "Football", "Boxing" };
 	String[] tempMatch = new String[2];
 	String[] tempRace = new String[10];
-	JComboBox sports = new JComboBox(sportTypes);
+	//JComboBox sports = new JComboBox(sportTypes);
 	JTextField amField = new JTextField("Amount"); //Obsolete
 	JTextField enAmount = new JTextField();
 	JComboBox betChoices = new JComboBox(HorseBet.getHorses());
@@ -61,13 +61,26 @@ public class GUI implements ActionListener {
 		placeBetBtn.addActionListener(this);
 			boxBtn.addActionListener(this);
 				match1.addActionListener(this);
+					fighterList[0].addActionListener(this);
+					fighterList[1].addActionListener(this);
 			footBtn.addActionListener(this);
 				match2.addActionListener(this);
+					teamList[0].addActionListener(this);
+					teamList[1].addActionListener(this);
 			hrseBtn.addActionListener(this);
 				match3.addActionListener(this);
+					horseList[0].addActionListener(this);
+					horseList[1].addActionListener(this);
+					horseList[2].addActionListener(this);
+					horseList[3].addActionListener(this);
+					horseList[4].addActionListener(this);
+					horseList[5].addActionListener(this);
+					horseList[6].addActionListener(this);
+					horseList[7].addActionListener(this);
+					horseList[8].addActionListener(this);
+					horseList[9].addActionListener(this);
 		checkResultsBtn.addActionListener(this);
 		exitBtn.addActionListener(this);
-		sports.addActionListener(this);
 		nextBtn.addActionListener(this);
 		printReceipt.addActionListener(this);
 		mMenu.addActionListener(this);
@@ -109,20 +122,45 @@ public class GUI implements ActionListener {
 		bMatches.setLayout(null);
 		bMatches.add(match1);
 		match1.setBounds(10, 10, 150, 20);
-		
-		bList.setLayout(null);
-		bList.add(fighterList[0]);
-		bList.add(fighterList[1]);
-		fighterList[0].setBounds(10, 10, 150, 20);
-		fighterList[1].setBounds(10, 35, 150, 20);
+			bList.setLayout(null);
+			bList.add(fighterList[0]);
+				fighterList[0].setBounds(10, 10, 150, 20);
+			bList.add(fighterList[1]);
+				fighterList[1].setBounds(10, 35, 150, 20);
 		
 		fMatches.setLayout(null);
 		fMatches.add(match2);
 		match2.setBounds(10, 10, 150, 20);
+			fList.setLayout(null);
+			fList.add(teamList[0]);
+				teamList[0].setBounds(10, 10, 150, 20);
+			fList.add(teamList[1]);
+				teamList[1].setBounds(10, 35, 150, 20);
 		
 		hRaces.setLayout(null);
 		hRaces.add(match3);
 		match3.setBounds(10, 10, 150, 20);
+			hList.setLayout(null);
+			hList.add(horseList[0]);
+				horseList[0].setBounds(10, 10, 150, 20);
+			hList.add(horseList[1]);
+				horseList[1].setBounds(10, 35, 150, 20);
+			hList.add(horseList[2]);
+				horseList[2].setBounds(10, 60, 150, 20);
+			hList.add(horseList[3]);
+				horseList[3].setBounds(10, 85, 150, 20);
+			hList.add(horseList[4]);
+				horseList[4].setBounds(10, 110, 150, 20);
+			hList.add(horseList[5]);
+				horseList[5].setBounds(10, 135, 150, 20);
+			hList.add(horseList[6]);
+				horseList[6].setBounds(10, 160, 150, 20);
+			hList.add(horseList[7]);
+				horseList[7].setBounds(10, 185, 150, 20);
+			hList.add(horseList[8]);
+				horseList[8].setBounds(10, 210, 150, 20);
+			hList.add(horseList[9]);
+				horseList[0].setBounds(10, 235, 150, 20);
 		
 		
 		// ---End Elaborate Match Menu ---//
@@ -152,8 +190,6 @@ public class GUI implements ActionListener {
 			switchMenu("Check Results");
 		} else if (e.getSource() == exitBtn) {
 			switchMenu("Quit");
-		} else if (e.getSource() == sports) {
-			changeBetChoices((String) sports.getSelectedItem());
 		} else if (e.getSource() == nextBtn) {
 			switchMenu("Next");
 		} else if (e.getSource() == boxBtn) {
@@ -212,7 +248,9 @@ public class GUI implements ActionListener {
 			match3.setText("Cheltenham");
 		} else if (menu == "Cheltenham") {
 			match1.setText("");
-			placeBetPanel.remove(match1);
+			frame.setSize(190, 300);
+			hRaces.setVisible(false);
+			frame.add(hList);
 			tempRace = HorseBet.getHorses();
 			horseList[0].setText(tempRace[0]);
 			horseList[1].setText(tempRace[1]);
@@ -224,25 +262,20 @@ public class GUI implements ActionListener {
 			horseList[7].setText(tempRace[7]);
 			horseList[8].setText(tempRace[8]);
 			horseList[9].setText(tempRace[9]);
-			placeBetPanel.add(horseList[0]);
-			placeBetPanel.add(horseList[1]);
-			placeBetPanel.add(horseList[2]);
-			placeBetPanel.add(horseList[3]);
-			placeBetPanel.add(horseList[4]);
-			placeBetPanel.add(horseList[5]);
-			placeBetPanel.add(horseList[6]);
-			placeBetPanel.add(horseList[7]);
-			placeBetPanel.add(horseList[8]);
-			placeBetPanel.add(horseList[9]);
 		} else if (menu == "CrokePark") {
 			match1.setText("");
 			tempMatch = FootballBet.randomFootballMatch();
 			teamList[0].setText(tempMatch[0]);
 			teamList[1].setText(tempMatch[1]);
-			placeBetPanel.add(teamList[0]);
-			placeBetPanel.add(teamList[1]);
+			fMatches.setVisible(false);
+			frame.add(fList);
 		} else if (menu == "NationalStadium") {
 			match1.setText("");
+			tempMatch = BoxingBet.randomBoxingMatch();
+			fighterList[0].setText(tempMatch[0]);
+			fighterList[1].setText(tempMatch[1]);
+			bMatches.setVisible(false);
+			frame.add(bList);
 		} else if (menu == "Check Results") {
 			mainMenuPanel.setVisible(false);
 			frame.add(checkResultsPanel);
@@ -254,13 +287,13 @@ public class GUI implements ActionListener {
 					printList.setText("Bets made: " + betsMade.size());
 				}
 			}
-		} else if (menu == "Submit") {
-			/*
+		/*}  else if (menu == "Submit") {
+			
 			 * I found using a try/catch here was a good idea seeing as we're
 			 * looking to see if the textField contains numbers. Since you can't
 			 * parse alphabet characters, the program will throw an exception if
 			 * there is anything but a number in there.
-			 */
+			 
 			try {
 				frame.remove(placeBetPanel);
 				mainMenuPanel.setVisible(true);
@@ -297,6 +330,7 @@ public class GUI implements ActionListener {
 				JOptionPane.showMessageDialog(null,
 						"Please enter a number in the amount section");
 			}
+			*/
 		} else if (menu == "Main Menu") {
 			frame.remove(checkResultsPanel);
 			mainMenuPanel.setVisible(true);

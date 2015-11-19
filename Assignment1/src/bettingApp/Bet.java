@@ -30,9 +30,9 @@ public class Bet {
 	}
 	
 	public static int generateRandom() {
-		Random rand = null;
+		Random rand = new Random();
 		
-		int i = rand.nextInt((20 - 1) + 1) + 1;
+		int i = rand.nextInt((10 - 1) + 1) + 1;
 		return i;
 	}
 }

@@ -13,8 +13,6 @@ public class BoxingBet extends Bet {
 			"Floyd Mayweather", "Manny Pacquiao", "Joe Louis",
 			"Sugar Ray Leonard", "George Foreman", "Sugar Ray Robinson",
 			"Joe Frazier", "Marvin Hagler" };
-	private static int a = generateRandom();
-	private static int b = generateRandom();
 
 
 	public BoxingBet(double amount, String boxer) {
@@ -48,14 +46,12 @@ public class BoxingBet extends Bet {
 	}
 	
 	public static String getFirst() {
-		String[] tempMatch = boxers;
-		String fBoxer = tempMatch[generateRandom()];
+		String fBoxer = boxers[generateRandom()];
 		return fBoxer;
 	}
 	
 	public static String getSecond() {
-		String[] tempMatch = boxers;
-		String sBoxer = tempMatch[generateRandom()];
+		String sBoxer = boxers[generateRandom()];
 		return sBoxer;
 	}
 }
