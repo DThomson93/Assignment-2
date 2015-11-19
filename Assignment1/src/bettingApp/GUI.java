@@ -15,32 +15,32 @@ public class GUI implements ActionListener {
 	JFrame frame = new JFrame("Place Your Bets!");
 	JPanel mainMenuPanel = new JPanel();
 	JPanel placeBetPanel = new JPanel();
-	JPanel fMatches = new JPanel();
-	JPanel bMatches = new JPanel();
-	JPanel hRaces = new JPanel();
+		JPanel fMatches = new JPanel();
+			JPanel fList = new JPanel();
+		JPanel bMatches = new JPanel();
+			JPanel bList = new JPanel();
+		JPanel hRaces = new JPanel();
+			JPanel hList = new JPanel();
 	JPanel checkResultsPanel = new JPanel();
-	JPanel horsePanel = new JPanel();
-	JPanel matchPanel = new JPanel();
 
 	JButton mainMenuBtn = new JButton("Main Menu.");
 	JButton placeBetBtn = new JButton("Place Bet");
-	JTextField choice1 = new JTextField("Choose your sport");
-	JButton boxBtn = new JButton("Boxing");
-	JButton footBtn = new JButton("Football");
-	JButton hrseBtn = new JButton("Horses");
-	JButton[] venueList = new JButton[6];
-	JButton match1 = new JButton("");
-	JButton match2 = new JButton("");
-	JButton match3 = new JButton("");
-	JButton[] teamList = new JButton[2];
-	JButton[] fighterList = new JButton[2];
-	JButton[] horseList = new JButton[10];
-	JTextField playerList = new JTextField("");
+		JTextField choice1 = new JTextField("Choose your sport");
+		//choice1.setHorizontalAlignment(JTextField.CENTER); //Trying to get this to work
+		JButton boxBtn = new JButton("Boxing");
+			JButton match1 = new JButton("");
+			JButton[] fighterList = new JButton[2];
+		JButton footBtn = new JButton("Football");
+			JButton match2 = new JButton("");
+			JButton[] teamList = new JButton[2];
+		JButton hrseBtn = new JButton("Horses");
+			JButton match3 = new JButton("");
+			JButton[] horseList = new JButton[10];
 	String[] sportTypes = { "Horses", "Football", "Boxing" };
 	String[] tempMatch = new String[2];
 	String[] tempRace = new String[10];
 	JComboBox sports = new JComboBox(sportTypes);
-	JTextField amField = new JTextField("Amount");
+	JTextField amField = new JTextField("Amount"); //Obsolete
 	JTextField enAmount = new JTextField();
 	JComboBox betChoices = new JComboBox(HorseBet.getHorses());
 	JButton nextBtn = new JButton("Continue");
@@ -59,6 +59,12 @@ public class GUI implements ActionListener {
 
 		// ---Action Listeners--- //
 		placeBetBtn.addActionListener(this);
+			boxBtn.addActionListener(this);
+				match1.addActionListener(this);
+			footBtn.addActionListener(this);
+				match2.addActionListener(this);
+			hrseBtn.addActionListener(this);
+				match3.addActionListener(this);
 		checkResultsBtn.addActionListener(this);
 		exitBtn.addActionListener(this);
 		sports.addActionListener(this);
@@ -101,19 +107,22 @@ public class GUI implements ActionListener {
 		
 		// ---Elaborate Match Menu--- //
 		bMatches.setLayout(null);
-		venueList[0].setText("");
-		bMatches.add(venueList[0]);
+		bMatches.add(match1);
 		match1.setBounds(10, 10, 150, 20);
+		
+		bList.setLayout(null);
+		bList.add(fighterList[0]);
+		bList.add(fighterList[1]);
+		fighterList[0].setBounds(10, 10, 150, 20);
+		fighterList[1].setBounds(10, 35, 150, 20);
 		
 		fMatches.setLayout(null);
-		venueList[1].setText("");
-		fMatches.add(venueList[1]);
-		match1.setBounds(10, 10, 150, 20);
+		fMatches.add(match2);
+		match2.setBounds(10, 10, 150, 20);
 		
 		hRaces.setLayout(null);
-		venueList[2].setText("");
-		hRaces.add(venueList[2]);
-		match1.setBounds(10, 10, 150, 20);
+		hRaces.add(match3);
+		match3.setBounds(10, 10, 150, 20);
 		
 		
 		// ---End Elaborate Match Menu ---//
@@ -153,11 +162,11 @@ public class GUI implements ActionListener {
 			switchMenu("FootMatches");
 		} else if (e.getSource() == hrseBtn) {
 			switchMenu("HorseMatches");
-		} else if (e.getSource() == venueList[0]) {
+		} else if (e.getSource() == match3) {
 			switchMenu("Cheltenham");
-		} else if (e.getSource() == venueList[1]) {
+		} else if (e.getSource() == match2) {
 			switchMenu("CrokePark");
-		} else if (e.getSource() == venueList[2]) {
+		} else if (e.getSource() == match1) {
 			switchMenu("NationalStadium");
 		} else if (e.getSource() == submitBtn) {
 			switchMenu("Submit");
@@ -178,7 +187,7 @@ public class GUI implements ActionListener {
 		 */
 		double amount = 0;
 		if (menu == "Place Bet") {
-			frame.setSize(500, 200);
+			frame.setSize(190, 200);
 			mainMenuPanel.setVisible(false);
 			frame.add(placeBetPanel);
 			placeBetPanel.setVisible(true);
@@ -188,19 +197,19 @@ public class GUI implements ActionListener {
 			placeBetPanel.setVisible(false);
 			frame.add(bMatches);
 			bMatches.setVisible(true);
-			venueList[0].setText("National Stadium");
+			match1.setText("National Stadium");
 		} else if (menu == "FootMatches") {
 			frame.setSize(190, 200);
 			placeBetPanel.setVisible(false);
 			frame.add(fMatches);
 			fMatches.setVisible(true);
-			venueList[1].setText("Croke Park");
+			match2.setText("Croke Park");
 		} else if (menu == "HorseMatches") {
 			frame.setSize(190, 200);
 			placeBetPanel.setVisible(false);
 			frame.add(hRaces);
 			hRaces.setVisible(true);
-			venueList[2].setText("Cheltenham");
+			match3.setText("Cheltenham");
 		} else if (menu == "Cheltenham") {
 			match1.setText("");
 			placeBetPanel.remove(match1);
