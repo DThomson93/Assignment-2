@@ -22,9 +22,11 @@ public class GUI implements ActionListener {
 		JPanel hRaces = new JPanel();
 			JPanel hList = new JPanel();
 	JPanel checkResultsPanel = new JPanel();
+	JPanel detPanel = new JPanel();
 
 	JButton mainMenuBtn = new JButton("Main Menu.");
 	JButton placeBetBtn = new JButton("Place Bet");
+	JTextField details = new JTextField();
 		JTextField choice1 = new JTextField("Choose your sport");
 		//choice1.setHorizontalAlignment(JTextField.CENTER); //Trying to get this to work
 		JButton boxBtn = new JButton("Boxing");
@@ -59,16 +61,31 @@ public class GUI implements ActionListener {
 
 		// ---Action Listeners--- //
 		placeBetBtn.addActionListener(this);
+		submitBtn.addActionListener(this);
 			boxBtn.addActionListener(this);
 				match1.addActionListener(this);
+					fighterList[0] = new JButton();
+					fighterList[1] = new JButton();
 					fighterList[0].addActionListener(this);
 					fighterList[1].addActionListener(this);
 			footBtn.addActionListener(this);
 				match2.addActionListener(this);
+					teamList[0] = new JButton();
+					teamList[1] = new JButton();
 					teamList[0].addActionListener(this);
 					teamList[1].addActionListener(this);
 			hrseBtn.addActionListener(this);
 				match3.addActionListener(this);
+					horseList[0] = new JButton();
+					horseList[1] = new JButton();
+					horseList[2] = new JButton();
+					horseList[3] = new JButton();
+					horseList[4] = new JButton();
+					horseList[5] = new JButton();
+					horseList[6] = new JButton();
+					horseList[7] = new JButton();
+					horseList[8] = new JButton();
+					horseList[9] = new JButton();
 					horseList[0].addActionListener(this);
 					horseList[1].addActionListener(this);
 					horseList[2].addActionListener(this);
@@ -162,7 +179,14 @@ public class GUI implements ActionListener {
 			hList.add(horseList[9]);
 				horseList[0].setBounds(10, 235, 150, 20);
 		
-		
+		detPanel.setLayout(null);
+		detPanel.add(details);
+			details.setBounds(10, 10, 150, 20);
+		detPanel.add(amField);
+			amField.setBounds(10, 35, 150, 20);
+		detPanel.add(enAmount);
+			enAmount.setBounds(10, 60, 150, 20);
+				
 		// ---End Elaborate Match Menu ---//
 		// ---Check Results Menu--- //
 		checkResultsPanel.setLayout(null);
@@ -204,6 +228,10 @@ public class GUI implements ActionListener {
 			switchMenu("CrokePark");
 		} else if (e.getSource() == match1) {
 			switchMenu("NationalStadium");
+		} else if (e.getSource() == fighterList[0]) {
+			switchMenu("Boxer1");
+		} else if (e.getSource() == fighterList[1]) {
+			switchMenu("Boxer2");
 		} else if (e.getSource() == submitBtn) {
 			switchMenu("Submit");
 		} else if (e.getSource() == mMenu) {
@@ -276,7 +304,22 @@ public class GUI implements ActionListener {
 			fighterList[1].setText(tempMatch[1]);
 			bMatches.setVisible(false);
 			frame.add(bList);
-		} else if (menu == "Check Results") {
+		} else if (menu == "Boxer1") {
+			frame.setSize(190, 200);
+			details.setText(tempMatch[0]);
+			details.setEditable(false);
+			bList.setVisible(false);
+			frame.add(detPanel);
+		} else if (menu == "Boxer2") {
+			frame.setSize(190, 200);
+			details.setText(tempMatch[1]);
+			details.setEditable(false);
+			bList.setVisible(false);
+			frame.add(detPanel);
+		}
+		
+		
+		else if (menu == "Check Results") {
 			mainMenuPanel.setVisible(false);
 			frame.add(checkResultsPanel);
 			checkResultsPanel.setVisible(true);

@@ -32,7 +32,7 @@ public class Bet {
 	public static int generateRandom() {
 		Random rand = new Random();
 		
-		int i = rand.nextInt((10 - 1) + 1) + 1;
+		int i = rand.nextInt((5 - 1) + 1) + 1;
 		return i;
 	}
 }
