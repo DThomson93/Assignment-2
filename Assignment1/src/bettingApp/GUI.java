@@ -37,14 +37,15 @@ public class GUI implements ActionListener {
 			JButton[] teamList = new JButton[2];
 		JButton hrseBtn = new JButton("Horses");
 			JButton match3 = new JButton("");
-			JButton[] horseList = new JButton[10];
+			JComboBox horseList = new JComboBox(HorseBet.randomHorseRace());
+			JButton contin = new JButton();
+			//JButton[] horseList = new JButton[10];
 	//String[] sportTypes = { "Horses", "Football", "Boxing" };
 	String[] tempMatch = new String[2];
 	String[] tempRace = new String[10];
 	//JComboBox sports = new JComboBox(sportTypes);
 	JTextField amField = new JTextField("Amount"); //Obsolete
 	JTextField enAmount = new JTextField();
-	JComboBox betChoices = new JComboBox(HorseBet.getHorses());
 	JButton nextBtn = new JButton("Continue");
 	JButton submitBtn = new JButton("Submit");
 	JButton checkResultsBtn = new JButton("Check your results");
@@ -76,26 +77,8 @@ public class GUI implements ActionListener {
 					teamList[1].addActionListener(this);
 			hrseBtn.addActionListener(this);
 				match3.addActionListener(this);
-					horseList[0] = new JButton();
-					horseList[1] = new JButton();
-					horseList[2] = new JButton();
-					horseList[3] = new JButton();
-					horseList[4] = new JButton();
-					horseList[5] = new JButton();
-					horseList[6] = new JButton();
-					horseList[7] = new JButton();
-					horseList[8] = new JButton();
-					horseList[9] = new JButton();
-					horseList[0].addActionListener(this);
-					horseList[1].addActionListener(this);
-					horseList[2].addActionListener(this);
-					horseList[3].addActionListener(this);
-					horseList[4].addActionListener(this);
-					horseList[5].addActionListener(this);
-					horseList[6].addActionListener(this);
-					horseList[7].addActionListener(this);
-					horseList[8].addActionListener(this);
-					horseList[9].addActionListener(this);
+					horseList.addActionListener(this);
+					
 		checkResultsBtn.addActionListener(this);
 		exitBtn.addActionListener(this);
 		nextBtn.addActionListener(this);
@@ -111,7 +94,7 @@ public class GUI implements ActionListener {
 
 		placeBetBtn.setBounds(10, 10, 150, 20);
 		checkResultsBtn.setBounds(10, 35, 150, 20);
-		exitBtn.setBounds(10, 60, 150, 20);
+		exitBtn.setBounds(10, 60, 150, 20);	
 
 		frame.add(mainMenuPanel);
 		frame.setVisible(true);
@@ -158,27 +141,10 @@ public class GUI implements ActionListener {
 		hRaces.add(match3);
 		match3.setBounds(10, 10, 150, 20);
 			hList.setLayout(null);
-			hList.add(horseList[0]);
-				horseList[0].setBounds(10, 10, 150, 20);
-			hList.add(horseList[1]);
-				horseList[1].setBounds(10, 35, 150, 20);
-			hList.add(horseList[2]);
-				horseList[2].setBounds(10, 60, 150, 20);
-			hList.add(horseList[3]);
-				horseList[3].setBounds(10, 85, 150, 20);
-			hList.add(horseList[4]);
-				horseList[4].setBounds(10, 110, 150, 20);
-			hList.add(horseList[5]);
-				horseList[5].setBounds(10, 135, 150, 20);
-			hList.add(horseList[6]);
-				horseList[6].setBounds(10, 160, 150, 20);
-			hList.add(horseList[7]);
-				horseList[7].setBounds(10, 185, 150, 20);
-			hList.add(horseList[8]);
-				horseList[8].setBounds(10, 210, 150, 20);
-			hList.add(horseList[9]);
-				horseList[0].setBounds(10, 235, 150, 20);
-		
+			hList.add(horseList);
+				horseList.setBounds(10, 10, 150, 20);
+				horseList.setSize(10, horseList.getPreferredSize().height);
+				
 		detPanel.setLayout(null);
 		detPanel.add(details);
 			details.setBounds(10, 10, 150, 20);
@@ -186,6 +152,8 @@ public class GUI implements ActionListener {
 			amField.setBounds(10, 35, 150, 20);
 		detPanel.add(enAmount);
 			enAmount.setBounds(10, 60, 150, 20);
+		detPanel.add(submitBtn);
+			submitBtn.setBounds(10, 85, 150, 20);
 				
 		// ---End Elaborate Match Menu ---//
 		// ---Check Results Menu--- //
@@ -232,6 +200,12 @@ public class GUI implements ActionListener {
 			switchMenu("Boxer1");
 		} else if (e.getSource() == fighterList[1]) {
 			switchMenu("Boxer2");
+		} else if (e.getSource() == teamList[0]) {
+			switchMenu("Football1");
+		} else if (e.getSource() == teamList[1]) {
+			switchMenu("Football2");
+		} else if (e.getSource() == horseList) {
+			switchMenu("horseChoice");
 		} else if (e.getSource() == submitBtn) {
 			switchMenu("Submit");
 		} else if (e.getSource() == mMenu) {
@@ -276,22 +250,14 @@ public class GUI implements ActionListener {
 			match3.setText("Cheltenham");
 		} else if (menu == "Cheltenham") {
 			match1.setText("");
-			frame.setSize(190, 300);
+			frame.setSize(190, 200);
 			hRaces.setVisible(false);
 			frame.add(hList);
 			tempRace = HorseBet.getHorses();
-			horseList[0].setText(tempRace[0]);
-			horseList[1].setText(tempRace[1]);
-			horseList[2].setText(tempRace[2]);
-			horseList[3].setText(tempRace[3]);
-			horseList[4].setText(tempRace[4]);
-			horseList[5].setText(tempRace[5]);
-			horseList[6].setText(tempRace[6]);
-			horseList[7].setText(tempRace[7]);
-			horseList[8].setText(tempRace[8]);
-			horseList[9].setText(tempRace[9]);
+			frame.add(horseList);
 		} else if (menu == "CrokePark") {
 			match1.setText("");
+			frame.setSize(190, 200);
 			tempMatch = FootballBet.randomFootballMatch();
 			teamList[0].setText(tempMatch[0]);
 			teamList[1].setText(tempMatch[1]);
@@ -299,6 +265,7 @@ public class GUI implements ActionListener {
 			frame.add(fList);
 		} else if (menu == "NationalStadium") {
 			match1.setText("");
+			frame.setSize(190, 200);
 			tempMatch = BoxingBet.randomBoxingMatch();
 			fighterList[0].setText(tempMatch[0]);
 			fighterList[1].setText(tempMatch[1]);
@@ -308,17 +275,38 @@ public class GUI implements ActionListener {
 			frame.setSize(190, 200);
 			details.setText(tempMatch[0]);
 			details.setEditable(false);
+			amField.setEditable(false);
 			bList.setVisible(false);
 			frame.add(detPanel);
 		} else if (menu == "Boxer2") {
 			frame.setSize(190, 200);
 			details.setText(tempMatch[1]);
 			details.setEditable(false);
+			amField.setEditable(false);
 			bList.setVisible(false);
 			frame.add(detPanel);
+		} else if (menu == "Football1") {
+			frame.setSize(190, 200);
+			details.setText(tempMatch[0]);
+			details.setEditable(false);
+			amField.setEditable(false);
+			fList.setVisible(false);
+			frame.add(detPanel);
+		} else if (menu == "Football2") {
+			frame.setSize(190, 200);
+			details.setText(tempMatch[1]);
+			details.setEditable(false);
+			amField.setEditable(false);
+			fList.setVisible(false);
+			frame.add(detPanel);
+		} else if (menu == "horseChoice") {
+			frame.setSize(190, 200);
+			details.setText(tempMatch[0]);
+			details.setEditable(false);
+			amField.setEditable(false);
+			hList.setVisible(false);
+			frame.add(detPanel);
 		}
-		
-		
 		else if (menu == "Check Results") {
 			mainMenuPanel.setVisible(false);
 			frame.add(checkResultsPanel);
@@ -383,6 +371,8 @@ public class GUI implements ActionListener {
 			System.exit(0);
 		}
 	}
+	
+	/* Old Code used to switch combo box valljues depending on whether user selected Football/Horse/Boxing in above Combo box
 
 	public void changeBetChoices(String betType) {
 		betChoices.removeAllItems();
@@ -400,6 +390,8 @@ public class GUI implements ActionListener {
 			}
 		}
 	}
+	
+	*/
 
 	//public void displayDetails() {
 
