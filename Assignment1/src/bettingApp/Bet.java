@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Bet {
 
-	private double amount;
+	private double amount = 0;
 	private String type;
 
 	public Bet(double amount) {
@@ -14,11 +14,7 @@ public class Bet {
 	}
 
 	public void setAmount(double a) {
-		//if (a > 0) {
-			amount = a;
-		//} else {
-			//amount = -1;
-		//}
+		amount = amount + a;
 	}
 
 	public double getAmount() {

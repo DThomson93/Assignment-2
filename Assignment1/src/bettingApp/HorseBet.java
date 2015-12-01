@@ -14,7 +14,7 @@ public class HorseBet extends Bet {
 			"Valegro", "Ajax", "Adios", "Bold Ruler", "Cigar", "Desert Gold", 
 			"Eclipse", "Funny Cide", "Gloaming", "Hyperion", "Iroquois", "Kelso", 
 			"Might and Power", "Red Rum", "Seabiscuit", "Totilas", "Vain", "War Admiral", 
-			"Zenyatta", "Affirmed", "Alydar"};
+			"Zenyatta", "Affirmed", "Alydar", "Emperor"};
 	
 	//Backup Horses is accessed if a duplicate is detected in the races displayed. backupHorses contains names that are not typically used when generating a race, so this reduces the likelihood of further identical horses.
 	private static String[] backupHorses = {""};
