@@ -9,12 +9,14 @@ import javax.swing.JScrollBar;
 import javax.swing.JLabel;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -23,7 +25,9 @@ import java.util.regex.Pattern;
 public class GUI implements ActionListener {
 	
 	ArrayList<Bet> betsMade = new ArrayList<Bet>();
+	DecimalFormat dec = new DecimalFormat("#.##");
 	double balance = 10.00;
+	//double balance = (double)Math.round(10.00*100) / (double)100;
 	boolean hbChecker = false;
 	boolean fbChecker = false;
 	boolean bbChecker = false;
@@ -41,7 +45,7 @@ public class GUI implements ActionListener {
 	JPanel panel_4 = new JPanel(); //Right-most Panel
 	
 	JLabel lblBalance = new JLabel("Balance:");
-	JLabel label = new JLabel("\u20AC" + balance);
+	JLabel label = new JLabel("\u20AC" + dec.format(balance));
 	JLabel lblSelectSport = new JLabel("   Select Sport");
 	JLabel lblPleaseEnterThe = new JLabel("Please enter the amount you would like to bet - ");
 	
@@ -106,6 +110,7 @@ public class GUI implements ActionListener {
 	JButton printReceipt = new JButton("Print Receipt");
 	JButton search = new JButton("Search");
 	JTextField searchBar = new JTextField("");
+	JButton loadBets = new JButton();
 	
 	String sportStatus = new String("");
 	String choice = new String("");
@@ -129,7 +134,6 @@ public class GUI implements ActionListener {
 
 
 	public GUI() {
-		
 		/***Basic Settings***/
 		
 		frame.setBounds(100, 100, 700, 500);
@@ -172,6 +176,7 @@ public class GUI implements ActionListener {
 		printReceipt.addActionListener(this);
 		search.addActionListener(this);
 		addBalance.addActionListener(this);
+		loadBets.addActionListener(this);
 		
 		bet1.addActionListener(this);
 		bet2.addActionListener(this);
@@ -373,6 +378,7 @@ public class GUI implements ActionListener {
 		panel_3.add(searchBar);
 			searchBar.setBounds(140, 70, 120, 23);
 			searchBar.setVisible(false);
+		panel_3.add(loadBets);
 		
 		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_4.setBounds(561, 11, 113, 439);
@@ -1191,9 +1197,10 @@ public class GUI implements ActionListener {
 			sb.append("The following bets contains the characters searched for:\n");
 			String message = "";
 			String stri = "";
+			String striLC = "";
 			for (Bet bet1 : betsMade) {
 				stri = Double.toString(bet1.getAmount());
-				if (bet1.getType().contains(searchBar.getText()) || stri.contains(searchBar.getText())) {
+				if (bet1.getType().toLowerCase().contains(searchBar.getText().toLowerCase()) || stri.contains(searchBar.getText().toLowerCase())) {
 					sb.append(bet1.getType());
 					sb.append(" Amount: \u20AC");
 					sb.append(stri);
@@ -1250,7 +1257,7 @@ public class GUI implements ActionListener {
 	}
 	
 	public void modifyBalance(double a, double b) {
-		
+		double bal2;
 		if (a > 0) {
 			a = a * -1;
 			balance = balance + a;
@@ -1259,7 +1266,8 @@ public class GUI implements ActionListener {
 			balance = balance + b;
 		}
 		
-		label.setText("\u20AC" + balance);
+		//balance = (double)Math.round(balance*100) / (double)100;
+		label.setText("\u20AC" + dec.format(balance));
 	}
 	
 	public void resultsVisibility() {
