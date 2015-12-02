@@ -1,3 +1,33 @@
-You bet on: Easy Goer
- Amount: €2.5
+You bet on: Arsenal
+ Amount: €3.0 at: 00:15:52
+
+You bet on: Barcelona
+ Amount: €1.0 at: 00:15:52
+
+You bet on: Floyd Mayweather
+ Amount: €2.0 at: 00:15:52
+
+You bet on: Muhammad Ali
+ Amount: €1.0 at: 00:15:52
+
+You bet on: Cigar
+ Amount: €3.0 at: 00:15:52
+
+You bet on: Bold Ruler
+ Amount: €2.0 at: 00:15:52
+
+You bet on: Kelso
+ Amount: €1.0 at: 00:15:52
+
+You bet on: Funny Cide
+ Amount: €1.0 at: 00:15:52
+
+You bet on: Liverpool
+ Amount: €2.0 at: 00:15:52
+
+You bet on: Arsenal
+ Amount: €1.0 at: 00:15:52
+
+You bet on: Manchester City
+ Amount: €1.0 at: 00:15:52
 

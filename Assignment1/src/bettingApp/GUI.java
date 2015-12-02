@@ -15,11 +15,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GUI implements ActionListener {
 	
 	ArrayList<Bet> betsMade = new ArrayList<Bet>();
-	double balance = 10;
+	double balance = 10.00;
+	boolean hbChecker = false;
+	boolean fbChecker = false;
+	boolean bbChecker = false;
+	
+	Calendar cal = Calendar.getInstance();
+	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 	JFrame frame = new JFrame();
 	JTextField enAmount = new JTextField();
@@ -41,6 +51,8 @@ public class GUI implements ActionListener {
 	JButton btnHorses = new JButton("Horse Racing");
 	JButton btnFootball = new JButton("Football");
 	JButton btnBoxing = new JButton("Boxing");
+	JButton addBalance = new JButton("Add to Balance");
+	JTextField balAdd = new JTextField("");
 	JButton btnSubmit = new JButton("Submit");
 	JButton venue1 = new JButton();
 	JButton venue2 = new JButton();
@@ -57,7 +69,7 @@ public class GUI implements ActionListener {
 	JToggleButton choice10 = new JToggleButton("");
 	
 	
-	JTextField info1 = new JTextField("  Team    Amount");
+	JTextField info1 = new JTextField("  Click for Details");
 	JTextField info2 = new JTextField("Amount");
 	JToggleButton bet1 = new JToggleButton("");
 	JToggleButton bet2 = new JToggleButton("");
@@ -69,6 +81,31 @@ public class GUI implements ActionListener {
 	JToggleButton bet8 = new JToggleButton("");
 	JToggleButton bet9 = new JToggleButton("");
 	JToggleButton bet10 = new JToggleButton("");
+	
+	JTextField fBet = new JTextField("");
+	JTextField oneStat = new JTextField("?");
+	JTextField sBet = new JTextField("");
+	JTextField twoStat = new JTextField("?");
+	JTextField tBet = new JTextField("");
+	JTextField threeStat = new JTextField("?");
+	JTextField foBet = new JTextField("");
+	JTextField fourStat = new JTextField("?");
+	JTextField fiBet = new JTextField("");
+	JTextField fiveStat = new JTextField("?");
+	JTextField siBet = new JTextField("");
+	JTextField sixStat = new JTextField("?");
+	JTextField seBet = new JTextField("");
+	JTextField sevStat = new JTextField("?");
+	JTextField eBet = new JTextField("");
+	JTextField eightStat = new JTextField("?");
+	JTextField nBet = new JTextField("");
+	JTextField nineStat = new JTextField("?");
+	JTextField teBet = new JTextField("");
+	JTextField tenStat = new JTextField("?");
+	
+	JButton printReceipt = new JButton("Print Receipt");
+	JButton search = new JButton("Search");
+	JTextField searchBar = new JTextField("");
 	
 	String sportStatus = new String("");
 	String choice = new String("");
@@ -111,13 +148,15 @@ public class GUI implements ActionListener {
 		btnPlaceBet.addActionListener(this);
 		btnCheckResults.addActionListener(this);
 		btnQuit.addActionListener(this);
+		
 		btnHorses.addActionListener(this);
 		btnFootball.addActionListener(this);
 		btnBoxing.addActionListener(this);
-		btnSubmit.addActionListener(this);
+		
 		venue1.addActionListener(this);
 		venue2.addActionListener(this);
 		venue3.addActionListener(this);
+		
 		choice1.addActionListener(this);
 		choice2.addActionListener(this);
 		choice3.addActionListener(this);
@@ -128,6 +167,12 @@ public class GUI implements ActionListener {
 		choice8.addActionListener(this);
 		choice9.addActionListener(this);
 		choice10.addActionListener(this);
+		
+		btnSubmit.addActionListener(this);
+		printReceipt.addActionListener(this);
+		search.addActionListener(this);
+		addBalance.addActionListener(this);
+		
 		bet1.addActionListener(this);
 		bet2.addActionListener(this);
 		bet3.addActionListener(this);
@@ -158,17 +203,23 @@ public class GUI implements ActionListener {
 		panel_1.add(label);
 			label.setBounds(38, 43, 46, 14);
 		panel.add(btnHorses);
-			btnHorses.setBounds(22, 231, 89, 23);
+			btnHorses.setBounds(15, 231, 110, 23);
 			btnHorses.setVisible(false);
 		panel.add(btnFootball);
-			btnFootball.setBounds(22, 265, 89, 23);
+			btnFootball.setBounds(15, 265, 110, 23);
 			btnFootball.setVisible(false);
 		panel.add(btnBoxing);
-			btnBoxing.setBounds(22, 299, 89, 23);
+			btnBoxing.setBounds(15, 299, 110, 23);
 			btnBoxing.setVisible(false);
 		panel.add(lblSelectSport);
-			lblSelectSport.setBounds(22, 215, 89, 14);
+			lblSelectSport.setBounds(25, 215, 89, 14);
 			lblSelectSport.setVisible(false);
+		panel.add(balAdd);
+			balAdd.setBounds(25, 140, 89, 23);
+			balAdd.setVisible(true);
+		panel.add(addBalance);
+			addBalance.setBounds(10, 170, 120, 23);
+			addBalance.setVisible(true);
 			
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_2.setBounds(159, 11, 397, 326);
@@ -215,6 +266,87 @@ public class GUI implements ActionListener {
 			choice10.setVisible(false);
 			choice10.setBounds(215, 181, 130, 23);
 			
+		panel_2.add(fBet);
+			fBet.setEditable(false);
+			fBet.setVisible(false);
+			fBet.setBounds(15, 10, 300, 23);
+		panel_2.add(oneStat);
+			oneStat.setEditable(false);
+			oneStat.setVisible(false);
+			oneStat.setBounds(330, 10, 50, 23);
+		panel_2.add(sBet);
+			sBet.setEditable(false);
+			sBet.setVisible(false);
+			sBet.setBounds(15, 40, 300, 23);
+		panel_2.add(twoStat);
+			twoStat.setEditable(false);
+			twoStat.setVisible(false);
+			twoStat.setBounds(330, 40, 50, 23);
+		panel_2.add(tBet);
+			tBet.setEditable(false);
+			tBet.setVisible(false);
+			tBet.setBounds(15, 70, 300, 23);
+		panel_2.add(threeStat);
+			threeStat.setEditable(false);
+			threeStat.setVisible(false);
+			threeStat.setBounds(330, 70, 50, 23);
+		panel_2.add(foBet);
+			foBet.setEditable(false);
+			foBet.setVisible(false);
+			foBet.setBounds(15, 100, 300, 23);
+		panel_2.add(fourStat);
+			fourStat.setEditable(false);
+			fourStat.setVisible(false);
+			fourStat.setBounds(330, 100, 50, 23);
+		panel_2.add(fiBet);
+			fiBet.setEditable(false);
+			fiBet.setVisible(false);
+			fiBet.setBounds(15, 130, 300, 23);
+		panel_2.add(fiveStat);
+			fiveStat.setEditable(false);
+			fiveStat.setVisible(false);
+			fiveStat.setBounds(330, 130, 50, 23);
+		panel_2.add(siBet);
+			siBet.setEditable(false);
+			siBet.setVisible(false);
+			siBet.setBounds(15, 160, 300, 23);
+		panel_2.add(sixStat);
+			sixStat.setEditable(false);
+			sixStat.setVisible(false);
+			sixStat.setBounds(330, 160, 50, 23);
+		panel_2.add(seBet);
+			seBet.setEditable(false);
+			seBet.setVisible(false);
+			seBet.setBounds(15, 190, 300, 23);
+		panel_2.add(sevStat);
+			sevStat.setEditable(false);
+			sevStat.setVisible(false);
+			sevStat.setBounds(330, 190, 50, 23);
+		panel_2.add(eBet);
+			eBet.setEditable(false);
+			eBet.setVisible(false);
+			eBet.setBounds(15, 220, 300, 23);
+		panel_2.add(eightStat);
+			eightStat.setEditable(false);
+			eightStat.setVisible(false);
+			eightStat.setBounds(330, 220, 50, 23);
+		panel_2.add(nBet);
+			nBet.setEditable(false);
+			nBet.setVisible(false);
+			nBet.setBounds(15, 250, 300, 23);
+		panel_2.add(nineStat);
+			nineStat.setEditable(false);
+			nineStat.setVisible(false);
+			nineStat.setBounds(330, 250, 50, 23);
+		panel_2.add(teBet);
+			teBet.setEditable(false);
+			teBet.setVisible(false);
+			teBet.setBounds(15, 280, 300, 23);
+		panel_2.add(tenStat);
+			tenStat.setEditable(false);
+			tenStat.setVisible(false);
+			tenStat.setBounds(330, 280, 50, 23);
+			
 		
 			
 		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -224,11 +356,23 @@ public class GUI implements ActionListener {
 		
 		panel_3.add(btnSubmit);
 			btnSubmit.setBounds(20, 44, 89, 23);
+			btnSubmit.setVisible(false);
 		panel_3.add(lblPleaseEnterThe);
 			lblPleaseEnterThe.setBounds(20, 11, 269, 23);
+			lblPleaseEnterThe.setVisible(false);
 		panel_3.add(enAmount);
 			enAmount.setBounds(299, 12, 86, 20);
 			enAmount.setColumns(10);
+			enAmount.setVisible(false);
+		panel_3.add(printReceipt);
+			printReceipt.setBounds(140, 10, 120, 23);
+			printReceipt.setVisible(false);
+		panel_3.add(search);
+			search.setBounds(140, 40, 120, 23);
+			search.setVisible(false);
+		panel_3.add(searchBar);
+			searchBar.setBounds(140, 70, 120, 23);
+			searchBar.setVisible(false);
 		
 		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_4.setBounds(561, 11, 113, 439);
@@ -238,26 +382,37 @@ public class GUI implements ActionListener {
 		panel_4.add(info1);
 			info1.setBounds(5, 11, 100, 23);
 			info1.setEditable(false);
+			info1.setVisible(false);
 		panel_4.add(bet1);
 			bet1.setBounds(5, 45, 100, 23);
+			bet1.setVisible(false);
 		panel_4.add(bet2);
 			bet2.setBounds(5, 79, 100, 23);
+			bet2.setVisible(false);
 		panel_4.add(bet3);
 			bet3.setBounds(5, 113, 100, 23);
+			bet3.setVisible(false);
 		panel_4.add(bet4);
 			bet4.setBounds(5, 147, 100, 23);
+			bet4.setVisible(false);
 		panel_4.add(bet5);
 			bet5.setBounds(5, 181, 100, 23);
+			bet5.setVisible(false);
 		panel_4.add(bet6);
 			bet6.setBounds(5, 215, 100, 23);
+			bet6.setVisible(false);
 		panel_4.add(bet7);
 			bet7.setBounds(5, 249, 100, 23);
+			bet7.setVisible(false);
 		panel_4.add(bet8);
 			bet8.setBounds(5, 283, 100, 23);
+			bet8.setVisible(false);
 		panel_4.add(bet9);
 			bet9.setBounds(5, 317, 100, 23);
+			bet9.setVisible(false);
 		panel_4.add(bet10);
 			bet10.setBounds(5, 351, 100, 23);
+			bet10.setVisible(false);
 	}
 
 	
@@ -269,10 +424,24 @@ public class GUI implements ActionListener {
 		 */
 		if (e.getSource() == btnPlaceBet) {
 			switchMenu("Place Bet");
+			info1.setVisible(true);
+			bet1.setVisible(true);
+			bet2.setVisible(true);
+			bet3.setVisible(true);
+			bet4.setVisible(true);
+			bet5.setVisible(true);
+			bet6.setVisible(true);
+			bet7.setVisible(true);
+			bet8.setVisible(true);
+			bet9.setVisible(true);
+			bet10.setVisible(true);
+			lblSelectSport.setVisible(true);
 		} else if (e.getSource() == btnCheckResults) {
 			switchMenu("Check Results");
 		} else if (e.getSource() == btnQuit) {
 			switchMenu("Quit");
+		} else if (e.getSource() == addBalance) {
+			switchMenu("Add to Balance");
 		} else if (e.getSource() == btnHorses) {
 			switchMenu("Horse Racing");
 			venue1.setText("Cheltenham");
@@ -324,42 +493,52 @@ public class GUI implements ActionListener {
 			resetButtonStatus();
 			choice1.setSelected(true);
 			choice = choice1.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice2) {
 			resetButtonStatus();
 			choice2.setSelected(true);
 			choice = choice2.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice3) {
 			resetButtonStatus();
 			choice3.setSelected(true);
 			choice = choice3.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice4) {
 			resetButtonStatus();
 			choice4.setSelected(true);
 			choice = choice4.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice5) {
 			resetButtonStatus();
 			choice5.setSelected(true);
 			choice = choice5.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice6) {
 			resetButtonStatus();
 			choice6.setSelected(true);
 			choice = choice6.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice7) {
 			resetButtonStatus();
 			choice7.setSelected(true);
 			choice = choice7.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice8) {
 			resetButtonStatus();
 			choice8.setSelected(true);
 			choice = choice8.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice9) {
 			resetButtonStatus();
 			choice9.setSelected(true);
 			choice = choice9.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == choice10) {
 			resetButtonStatus();
 			choice10.setSelected(true);
 			choice = choice10.getText();
+			btnSubmit.setVisible(true);
 		} else if (e.getSource() == bet1) {
 			if (betsMade.isEmpty()) {
 			
@@ -368,7 +547,13 @@ public class GUI implements ActionListener {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet1.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet1.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet1.setText("");
 				} 
 			}
@@ -377,11 +562,17 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet2.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet2.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet2.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet2.setText("");
 				} 
 			}
@@ -390,11 +581,17 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet3.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet3.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet3.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet3.setText("");
 				} 
 			}
@@ -403,11 +600,17 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet4.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet4.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet4.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet4.setText("");
 				} 
 			}
@@ -416,24 +619,36 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet5.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet5.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet5.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet5.setText("");
-				} 
+				}  
 			}
 			bet5.setSelected(false);
 		} else if (e.getSource() == bet6) {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet6.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet6.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet6.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet6.setText("");
 				} 
 			}
@@ -442,11 +657,17 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet7.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet7.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet7.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet7.setText("");
 				} 
 			}
@@ -455,11 +676,17 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet8.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet8.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet8.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet8.setText("");
 				} 
 			}
@@ -468,37 +695,47 @@ public class GUI implements ActionListener {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet9.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet9.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet9.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet9.setText("");
-				} 
+				}  
 			}
 			bet9.setSelected(false);
 		} else if (e.getSource() == bet10) {
 			if (betsMade.isEmpty()) {
 			
 			} else {
-				int n = JOptionPane.showOptionDialog(frame, "What would you like to do?", "Edit Bet", 
+				int n = JOptionPane.showOptionDialog(frame, bet10.getText(), "Edit Bet", 
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				
 				if (n == 0) {
-					betsMade.remove(bet10.getText());
+					for(int i = 0; i < betsMade.size(); i++) {
+						Bet tempBet = betsMade.get(i);
+						if(bet10.getText().contains(tempBet.getType())) {
+							betsMade.remove(i);
+							System.out.print(betsMade.size());
+						}
+					}
 					bet10.setText("");
 				} 
 			}
 			bet10.setSelected(false);
-		}
-		
-		else if (e.getSource() == btnSubmit) {
+		} else if (e.getSource() == btnSubmit) {
 			switchMenu("Submit");
+		} else if (e.getSource() == printReceipt) {
+			switchMenu("Print Receipt");
+		} else if (e.getSource() == search) {
+			switchMenu("Search");
 		}
-		
-		//else if (e.getSource() == printReceipt) {
-			//switchMenu("Print Receipt");
-		//}
 	}
 	
 	public void switchMenu(String menu) {
@@ -506,32 +743,152 @@ public class GUI implements ActionListener {
 			btnHorses.setVisible(true);
 			btnBoxing.setVisible(true);	
 			btnFootball.setVisible(true);
+			fBet.setVisible(false);
+			sBet.setVisible(false);
+			tBet.setVisible(false);
+			foBet.setVisible(false);
+			fiBet.setVisible(false);
+			siBet.setVisible(false);
+			seBet.setVisible(false);
+			eBet.setVisible(false);
+			nBet.setVisible(false);
+			teBet.setVisible(false);
+			printReceipt.setVisible(false);
+			oneStat.setVisible(false);
+			twoStat.setVisible(false);
+			threeStat.setVisible(false);
+			fourStat.setVisible(false);
+			fiveStat.setVisible(false);
+			sixStat.setVisible(false);
+			sevStat.setVisible(false);
+			eightStat.setVisible(false);
+			nineStat.setVisible(false);
+			tenStat.setVisible(false);
+			search.setVisible(false);
+			searchBar.setVisible(false);
 		} else if (menu == "Check Results") {
-			if (btnHorses.isVisible() == true) {
-				btnHorses.setVisible(false);
-				btnBoxing.setVisible(false);
-				btnFootball.setVisible(false);
-				venue1.setVisible(false);
-				venue2.setVisible(false);
-				venue3.setVisible(false);
-				choice1.setVisible(false);
-				choice2.setVisible(false);
-				choice3.setVisible(false);
-				choice4.setVisible(false);
-				choice5.setVisible(false);
-				choice6.setVisible(false);
-				choice7.setVisible(false);
-				choice8.setVisible(false);
-				choice9.setVisible(false);
-				choice10.setVisible(false);
+			if (betsMade.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "You have made no bets yet!");
+			} else {
+				if (btnHorses.isVisible() == true || bet1.isVisible() == true) {
+					resultsVisibility();
+				}
+				if (!bet1.getText().isEmpty()) {
+					fBet.setVisible(true);
+					oneStat.setVisible(true);
+					fBet.setText(bet1.getText());
+					oneStat.setText(coinFlip());
+					if (oneStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet2.getText().isEmpty()) {
+					sBet.setVisible(true);
+					twoStat.setVisible(true);
+					sBet.setText(bet2.getText());
+					twoStat.setText(coinFlip());
+					if (twoStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet3.getText().isEmpty()) {
+					tBet.setVisible(true);
+					threeStat.setVisible(true);
+					tBet.setText(bet3.getText());
+					threeStat.setText(coinFlip());
+					if (threeStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet4.getText().isEmpty()) {
+					foBet.setVisible(true);
+					fourStat.setVisible(true);
+					foBet.setText(bet4.getText());
+					fourStat.setText(coinFlip());
+					if (fourStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet5.getText().isEmpty()) {
+					fiBet.setVisible(true);
+					fiveStat.setVisible(true);
+					fiBet.setText(bet5.getText());
+					fiveStat.setText(coinFlip());
+					if (fiveStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet6.getText().isEmpty()) {
+					siBet.setVisible(true);
+					sixStat.setVisible(true);
+					siBet.setText(bet6.getText());
+					sixStat.setText(coinFlip());
+					if (sixStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet7.getText().isEmpty()) {
+					seBet.setVisible(true);
+					sevStat.setVisible(true);
+					seBet.setText(bet7.getText());
+					sevStat.setText(coinFlip());
+					if (sevStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet8.getText().isEmpty()) {
+					eBet.setVisible(true);
+					eightStat.setVisible(true);
+					eBet.setText(bet8.getText());
+					eightStat.setText(coinFlip());
+					if (eightStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet9.getText().isEmpty()) {
+					nBet.setVisible(true);
+					nineStat.setVisible(true);
+					nBet.setText(bet9.getText());
+					nineStat.setText(coinFlip());
+					if (nineStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				if (!bet10.getText().isEmpty()) {
+					teBet.setVisible(true);
+					tenStat.setVisible(true);
+					teBet.setText(bet10.getText());
+					tenStat.setText(coinFlip());
+					if (tenStat.getText().contains("W")) {
+						modifyBalance(0, 1);
+					}
+				}
+				search.setVisible(true);
+				searchBar.setVisible(true);
+				printReceipt.setVisible(true);
 			}
-		} else if (menu == "Horse Racing") {
+		} else if (menu == "Add to Balance") {
+			try {
+				double addBal = Double.parseDouble(balAdd.getText());
+				if (balAdd.getText() == "") {
+					JOptionPane.showMessageDialog(null, "Please enter a value before attempting to add to your balance");
+				} else if (addBal <= 0) {
+					JOptionPane.showMessageDialog(null, "Please enter a value greater than 0");
+				} else {
+				modifyBalance(0, addBal);
+				JOptionPane.showMessageDialog(null, "Money added to account!");
+				}
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Please enter a number");
+			}
+			balAdd.setText("");
+		}
+		else if (menu == "Horse Racing") {
 			if (venue1.isVisible() == false) {
 				venue1.setVisible(true);
 				venue2.setVisible(true);
 				venue3.setVisible(true);
-			}
-			if (choice1.isVisible() == true) {
+			} else {
 				choice1.setVisible(false);
 				choice2.setVisible(false);
 				choice3.setVisible(false);
@@ -548,8 +905,7 @@ public class GUI implements ActionListener {
 				venue1.setVisible(true);
 				venue2.setVisible(true);
 				venue3.setVisible(true);
-			}
-			if (choice1.isVisible() == true) {
+			} else {
 				choice1.setVisible(false);
 				choice2.setVisible(false);
 				choice3.setVisible(false);
@@ -566,8 +922,7 @@ public class GUI implements ActionListener {
 				venue1.setVisible(true);
 				venue2.setVisible(true);
 				venue3.setVisible(true);
-			}
-			if (choice1.isVisible() == true) {
+			} else {
 				choice1.setVisible(false);
 				choice2.setVisible(false);
 				choice3.setVisible(false);
@@ -600,6 +955,8 @@ public class GUI implements ActionListener {
 			choice9.setText(horseTeams[8]);
 			choice10.setVisible(true);
 			choice10.setText(horseTeams[9]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Tramore") {
 			choice1.setVisible(true);
 			choice1.setText(horseTeams[10]);
@@ -621,6 +978,8 @@ public class GUI implements ActionListener {
 			choice9.setText(horseTeams[18]);
 			choice10.setVisible(true);
 			choice10.setText(horseTeams[19]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Musselburgh") {
 			choice1.setVisible(true);
 			choice1.setText(horseTeams[20]);
@@ -642,140 +1001,210 @@ public class GUI implements ActionListener {
 			choice9.setText(horseTeams[28]);
 			choice10.setVisible(true);
 			choice10.setText(horseTeams[29]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Wembley") {
 			choice1.setVisible(true);
 			choice1.setText(footTeams[0]);
 			choice6.setVisible(true);
 			choice6.setText(footTeams[1]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Croke Park") {
 			choice1.setVisible(true);
 			choice1.setText(footTeams[2]);
 			choice6.setVisible(true);
 			choice6.setText(footTeams[3]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "San Siro") {
 			choice1.setVisible(true);
 			choice1.setText(footTeams[4]);
 			choice6.setVisible(true);
 			choice6.setText(footTeams[5]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		}
 		else if (menu == "MGM Grand") {
 			choice1.setVisible(true);
 			choice1.setText(boxers[0]);
 			choice6.setVisible(true);
 			choice6.setText(boxers[1]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Araneta") {
 			choice1.setVisible(true);
 			choice1.setText(boxers[2]);
 			choice6.setVisible(true);
 			choice6.setText(boxers[3]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Blue Horizon") {
 			choice1.setVisible(true);
 			choice1.setText(boxers[4]);
 			choice6.setVisible(true);
 			choice6.setText(boxers[5]);
+			lblPleaseEnterThe.setVisible(true);
+			enAmount.setVisible(true);
 		} else if (menu == "Submit"){
 			try {
 				double amount = Double.parseDouble(enAmount.getText());
-				if (balance >= amount) {
-				if (amount > 0) {
-					if (sportStatus == "Horse") {
-						HorseBet hb = new HorseBet(amount, choice);
-						betsMade.add(hb);
-						modifyBalance(amount, 0);
-						counter++;
-						if (bet1.getText() == "") {
-							bet1.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet2.getText() == "") {
-							bet2.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet3.getText() == "") {
-							bet3.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet4.getText() == "") {
-							bet4.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet5.getText() == "") {
-							bet5.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet6.getText() == "") {
-							bet6.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet7.getText() == "") {
-							bet7.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet8.getText() == "") {
-							bet8.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet9.getText() == "") {
-							bet9.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else if (bet10.getText() == "") {
-							bet10.setText(hb.getType() + " Amount: \u20AC" + hb.getAmount());
-						} else {
-							JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
-						}
-					} else if (sportStatus == "Football") {
-						FootballBet fb = new FootballBet(amount, choice);
-						betsMade.add(fb);
-						modifyBalance(amount, 0);
-						counter++;
-						if (bet1.getText() == "") {
-							bet1.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet2.getText() == "") {
-							bet2.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet3.getText() == "") {
-							bet3.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet4.getText() == "") {
-							bet4.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet5.getText() == "") {
-							bet5.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet6.getText() == "") {
-							bet6.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet7.getText() == "") {
-							bet7.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet8.getText() == "") {
-							bet8.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet9.getText() == "") {
-							bet9.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else if (bet10.getText() == "") {
-							bet10.setText(fb.getType() + " Amount: \u20AC" + fb.getAmount());
-						} else {
-							JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
-						}
-					} else if (sportStatus == "Boxing") {
-						BoxingBet bb = new BoxingBet(amount, choice);
-						betsMade.add(bb);
-						modifyBalance(amount, 0);
-						counter++;
-						if (bet1.getText() == "") {
-							bet1.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet2.getText() == "") {
-							bet2.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet3.getText() == "") {
-							bet3.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet4.getText() == "") {
-							bet4.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet5.getText() == "") {
-							bet5.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet6.getText() == "") {
-							bet6.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet7.getText() == "") {
-							bet7.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet8.getText() == "") {
-							bet8.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet9.getText() == "") {
-							bet9.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else if (bet10.getText() == "") {
-							bet10.setText(bb.getType() + " Amount: \u20AC" + bb.getAmount());
-						} else {
-							JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
-						}
+				if (choice == "") {
+					JOptionPane.showMessageDialog(null, "Please select someone to bet on before attempting to place a bet.");
+				} else {
+					if (balance >= amount) {
+						if (amount > 0) {
+							if (sportStatus == "Horse") {
+								HorseBet hb = new HorseBet(amount, choice);
+								for (int j = 0; j < betsMade.size(); j++) {
+									Bet tempBet2 = betsMade.get(j);
+									if (hb.getType() == tempBet2.getType()) {
+										JOptionPane.showMessageDialog(null, "You cannot bet on the same person twice!");
+										hbChecker = true;
+									}
+								}
+								if (hbChecker == false) {
+									betsMade.add(hb);
+									modifyBalance(amount, 0);
+									counter++;
+									if (bet1.getText() == "") {
+										bet1.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet2.getText() == "") {
+										bet2.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet3.getText() == "") {
+										bet3.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet4.getText() == "") {
+										bet4.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet5.getText() == "") {
+										bet5.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet6.getText() == "") {
+										bet6.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet7.getText() == "") {
+										bet7.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet8.getText() == "") {
+										bet8.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet9.getText() == "") {
+										bet9.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet10.getText() == "") {
+										bet10.setText(hb.getType() + ", Amount: \u20AC" + hb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else {
+										JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
+									}
+								}
+							} else if (sportStatus == "Football") {
+								FootballBet fb = new FootballBet(amount, choice);
+								for (int j = 0; j < betsMade.size(); j++) {
+									Bet tempBet2 = betsMade.get(j);
+									if (fb.getType() == tempBet2.getType()) {
+										JOptionPane.showMessageDialog(null, "You cannot bet on the same person twice!");
+										fbChecker = true;
+									}
+								}
+								if (fbChecker == false) {
+									betsMade.add(fb);
+									modifyBalance(amount, 0);
+									counter++;
+									if (bet1.getText() == "") {
+										bet1.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet2.getText() == "") {
+										bet2.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet3.getText() == "") {
+										bet3.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet4.getText() == "") {
+										bet4.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet5.getText() == "") {
+										bet5.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet6.getText() == "") {
+										bet6.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet7.getText() == "") {
+										bet7.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet8.getText() == "") {
+										bet8.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet9.getText() == "") {
+										bet9.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet10.getText() == "") {
+										bet10.setText(fb.getType() + ", Amount: \u20AC" + fb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else {
+										JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
+									}
+								}
+							} else if (sportStatus == "Boxing") {
+								BoxingBet bb = new BoxingBet(amount, choice);
+								for (int j = 0; j < betsMade.size(); j++) {
+									Bet tempBet2 = betsMade.get(j);
+									if (bb.getType() == tempBet2.getType()) {
+										JOptionPane.showMessageDialog(null, "You cannot bet on the same person twice!");
+										bbChecker = true;
+									}
+								}
+								if (bbChecker == false) {
+									betsMade.add(bb);
+									modifyBalance(amount, 0);
+									counter++;
+									if (bet1.getText() == "") {
+										bet1.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet2.getText() == "") {
+										bet2.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet3.getText() == "") {
+										bet3.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet4.getText() == "") {
+										bet4.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet5.getText() == "") {
+										bet5.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet6.getText() == "") {
+										bet6.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet7.getText() == "") {
+										bet7.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet8.getText() == "") {
+										bet8.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet9.getText() == "") {
+										bet9.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else if (bet10.getText() == "") {
+										bet10.setText(bb.getType() + ", Amount: \u20AC" + bb.getAmount() + ", Made at: " + sdf.format(cal.getTime()));
+									} else {
+										JOptionPane.showMessageDialog(null, "You have reached your limit for number of bets made. Please remove a bet or wait until a bet result has come in before making another.");
+									}
+								}
+							} else if (sportStatus == "") {
+								JOptionPane.showMessageDialog(null, "You need to choose a sport and someone to bet on before submitting a bet");
+							}
+							choice = "";
+						} 
+					} else if (balance < amount) {
+						JOptionPane.showMessageDialog(null, "The amount entered exceeds your balance. Please enter a lower amount or add more money to your balance");
 					}
-					} 
-				} else if (balance < amount) {
-					JOptionPane.showMessageDialog(null, "The amount entered exceeds your balance. Please enter a lower amount or add more money to your balance");
-				}
+				} 
 				enAmount.setText("");
 				resetButtonStatus();
 			} catch(NumberFormatException e) {
 				JOptionPane.showMessageDialog(null,
 						"Please enter a number in the amount section");
+				enAmount.setText("");
 			}
-		}
-		
-		else if (menu == "Quit") {
+			hbChecker = false;
+			fbChecker = false;
+			bbChecker = false;
+		} else if (menu == "Print Receipt") {
+			createReceipt();
+		} else if (menu == "Search") {
+			StringBuilder sb = new StringBuilder();
+			sb.append("The following bets contains the characters searched for:\n");
+			String message = "";
+			String stri = "";
+			for (Bet bet1 : betsMade) {
+				stri = Double.toString(bet1.getAmount());
+				if (bet1.getType().contains(searchBar.getText()) || stri.contains(searchBar.getText())) {
+					sb.append(bet1.getType());
+					sb.append(" Amount: \u20AC");
+					sb.append(stri);
+					sb.append("\n");
+					System.out.print("Test3");
+				}
+			}
+			message = sb.toString();
+			JOptionPane.showMessageDialog(null, message);
+			searchBar.setText("");
+		} else if (menu == "Quit") {
 			System.exit(0);
 		}
 	}
@@ -785,11 +1214,11 @@ public class GUI implements ActionListener {
 		int i = rand.nextInt(2);
 		String results = "";
 		if (i == 0) {
-			results = "You have won!";
+			results = "Won!";
 				
 		}
 		else {
-			results = "You have lost!";
+			results = "Lost!";
 				
 		}
 		return results;
@@ -798,71 +1227,7 @@ public class GUI implements ActionListener {
 	public static void main(String[] args) {
 		GUI gui = new GUI();
 		gui.frame.setVisible(true);
-		/*
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI window = new GUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		*/
 	}
-	
-	public static String[] randomBoxingMatch() {
-		
-		String firstB = getFirstBoxer();
-		String secondB = getSecondBoxer();
-		
-		if (firstB.equals(secondB)) {
-			secondB = boxers[generateRandom()];
-		}
-		
-		String tempBoxers[] = {firstB, secondB};
-		
-		return tempBoxers;
-		
-	}
-	
-	public static String getFirstBoxer() {
-		String fBoxer = boxers[generateRandom()];
-		return fBoxer;
-	}
-	
-	public static String getSecondBoxer() {
-		String sBoxer = boxers[generateRandom()];
-		return sBoxer;
-	}
-	
-	
-	/*
-	public static String[] randomFootballMatch() {
-		
-		String firstT = getTeam();
-		String secondT = getTeam();
-		String thirdT = getTeam();
-		String fourthT = getTeam();
-		String fifthT = getTeam();
-		String sixthT = getTeam();
-		
-		String tempTeams[] = {firstT, secondT, thirdT, fourthT, fifthT, sixthT};
-		
-		return tempTeams;
-		
-	}
-	
-	*/
-	
-	public static String getTeam() {
-		String[] tempMatch = footTeams;
-		String fTeam = tempMatch[generateRandom()];
-		return fTeam;
-	}
-
 	
 	public static int generateRandom() {
 		Random rand = new Random();
@@ -895,5 +1260,63 @@ public class GUI implements ActionListener {
 		}
 		
 		label.setText("\u20AC" + balance);
+	}
+	
+	public void resultsVisibility() {
+		btnHorses.setVisible(false);
+		btnBoxing.setVisible(false);
+		btnFootball.setVisible(false);
+		venue1.setVisible(false);
+		venue2.setVisible(false);
+		venue3.setVisible(false);
+		choice1.setVisible(false);
+		choice2.setVisible(false);
+		choice3.setVisible(false);
+		choice4.setVisible(false);
+		choice5.setVisible(false);
+		choice6.setVisible(false);
+		choice7.setVisible(false);
+		choice8.setVisible(false);
+		choice9.setVisible(false);
+		choice10.setVisible(false);
+		info1.setVisible(false);
+		bet1.setVisible(false);
+		bet2.setVisible(false);
+		bet3.setVisible(false);
+		bet4.setVisible(false);
+		bet5.setVisible(false);
+		bet6.setVisible(false);
+		bet7.setVisible(false);
+		bet8.setVisible(false);
+		bet9.setVisible(false);
+		bet10.setVisible(false);
+		lblSelectSport.setVisible(false);
+		lblPleaseEnterThe.setVisible(false);
+		btnSubmit.setVisible(false);
+		enAmount.setVisible(false);
+	}
+	
+	public void createReceipt() {
+		String fileName = "receipts.txt";
+
+		PrintWriter outputstream = null;
+		try {
+			outputstream = new PrintWriter(fileName);
+		} catch (FileNotFoundException e) {
+			System.out.println("File " + fileName + " not found.");
+			System.exit(0);
+		}
+		if (betsMade.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "You have made no bets, therefore there are no receipts!");
+		} else {
+
+			for (Bet bet : betsMade) {
+				outputstream.println("You bet on: " + bet.getType()
+						+ "\n Amount: €" + bet.getAmount() + " at: " + sdf.format(cal.getTime()) + "\n");
+			}
+			JOptionPane.showMessageDialog(null, "Receipts Printed!");
+		}
+
+		outputstream.close();
 	}
 }
