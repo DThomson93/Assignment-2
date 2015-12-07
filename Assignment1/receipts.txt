@@ -1,10 +1,4 @@
-You bet on: Bold Ruler
- Amount: €1 at: 17:25:32
-
 You bet on: Barcelona
- Amount: €2 at: 17:25:32
+ Amount: €2 at: 18:10:20
 
-You bet on: Floyd Mayweather
- Amount: €3 at: 17:25:32
-
-Balance at time of printing: €6
+Balance at time of printing: €8

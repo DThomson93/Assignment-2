@@ -16,9 +16,6 @@ public class HorseBet extends Bet {
 			"Might and Power", "Red Rum", "Seabiscuit", "Totilas", "Vain", "War Admiral", 
 			"Zenyatta", "Affirmed", "Alydar", "Emperor"};
 	
-	//Backup Horses is accessed if a duplicate is detected in the races displayed. backupHorses contains names that are not typically used when generating a race, so this reduces the likelihood of further identical horses.
-	private static String[] backupHorses = {""};
-
 	public HorseBet(double amount, String horse) {
 		super(amount);
 		type = horse;

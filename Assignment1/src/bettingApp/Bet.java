@@ -1,4 +1,4 @@
-//This class is never directly called by anything. And only serves to act as a blueprint for Horse/Football/Boxing bet classes.
+//Super class for FootballBet/BoxingBet/HorseBet
 package bettingApp;
 
 public class Bet {

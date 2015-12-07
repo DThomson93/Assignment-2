@@ -23,7 +23,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GUI implements ActionListener {
-
+	/** GUI class that initialises most variables that are necessary for the program.
+	 * Includes initialisation of GUI panels/buttons etc and generic variables for use in the program.
+	 */
 	ArrayList<Bet> betsMade = new ArrayList<Bet>();
 	DecimalFormat dec = new DecimalFormat("#.##");
 	double balance = 10.00;
@@ -132,6 +134,13 @@ public class GUI implements ActionListener {
 			"Joe Frazier", "Marvin Hagler" };
 
 	public GUI() {
+		/*
+		 * Constructor for the GUI. This is called by the main method.
+		 * This takes the GUI elements that are initialised above and gives them their position in the frame
+		 * and the panels they belong in.
+		 * Also responsible for adding actionListeners to each button and the initial state of each Element.
+		 * E.g visible, editable etc.
+		 */
 		/*** Basic Settings ***/
 
 		frame.setTitle("Betting App");
@@ -771,6 +780,12 @@ public class GUI implements ActionListener {
 	}
 
 	public void switchMenu(String menu) {
+		/*
+		 * Depending on which button was pressed, and consequently, what string waas passed to this method,
+		 * a different action will be performed. 
+		 * While actionPerformed method handles some of the code related to each button, this method handles
+		 * the bulk of the coding work. 
+		 */
 		if (menu == "Place Bet") {
 			btnHorses.setVisible(true);
 			btnBoxing.setVisible(true);
@@ -1389,6 +1404,12 @@ public class GUI implements ActionListener {
 	}
 
 	public static String coinFlip() {
+		/*
+		 * Method responsible for "flipping a coin". In reality a random number, 0 or 1, is generated. 
+		 * If it is 0 then you have won the bet, if it is 1 then you have lost. 
+		 * This is then returned to the Check Results screen and depending on the result modifies the balance,
+		 * and then displays whether you won or lost next to each bet.
+		 */
 		Random rand = new Random();
 		int i = rand.nextInt(2);
 		String results = "";
@@ -1408,6 +1429,10 @@ public class GUI implements ActionListener {
 	}
 
 	public void resetButtonStatus() {
+		/*
+		 * Method used to get rid of lots of code that was looking ugly in the switchMenu method.
+		 * The method is called when needed.
+		 */
 		choice1.setSelected(false);
 		choice2.setSelected(false);
 		choice3.setSelected(false);
@@ -1421,6 +1446,12 @@ public class GUI implements ActionListener {
 	}
 
 	public void modifyBalance(double a, double b) {
+		/*
+		 * Method used for modifying the balance. Two variables, a and b are passed to the method.
+		 * a is responsible for taking money out of the balance. Despite the fact that it appears to add to
+		 * it, it should be noted that the amount is first being multiplied by -1. 
+		 * The variable b is responsible for adding to the balance if you won a bet or if you added more.
+		 */
 		double bal2;
 		if (a > 0) {
 			a = a * -1;
@@ -1433,6 +1464,10 @@ public class GUI implements ActionListener {
 	}
 
 	public void resultsVisibility() {
+		/*
+		 * Another method responsible for turning off elements in the GUI when they're not needed.
+		 * Again, same reason as before, in order to remove lots of ugly code in the switchMenu method.
+		 */
 		btnHorses.setVisible(false);
 		btnBoxing.setVisible(false);
 		btnFootball.setVisible(false);
@@ -1467,6 +1502,11 @@ public class GUI implements ActionListener {
 	}
 
 	public void createReceipt() {
+		/*
+		 * Method used for printing results to a .txt file. 
+		 * Prints description of each bet and the balance at the end of each bet. 
+		 * Once results are printed, the bets you made are deleted so you can make more.
+		 */
 		String fileName = "receipts.txt";
 
 		PrintWriter outputstream = null;
