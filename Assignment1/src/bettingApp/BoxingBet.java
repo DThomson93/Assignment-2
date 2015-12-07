@@ -28,6 +28,7 @@ public class BoxingBet extends Bet {
 		return type;
 	}
 	
+	/* See FootballBet class for information.
 	public static String[] randomBoxingMatch() {
 		getFirst();
 		getSecond();
@@ -54,4 +55,5 @@ public class BoxingBet extends Bet {
 		String sBoxer = boxers[generateRandom()];
 		return sBoxer;
 	}
+	*/
 }

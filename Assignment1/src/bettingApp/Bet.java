@@ -1,8 +1,6 @@
 //This class is never directly called by anything. And only serves to act as a blueprint for Horse/Football/Boxing bet classes.
 package bettingApp;
 
-import java.util.Random;
-
 public class Bet {
 
 	private double amount = 0;
@@ -23,12 +21,5 @@ public class Bet {
 
 	public String getType() {
 		return type;
-	}
-	
-	public static int generateRandom() {
-		Random rand = new Random();
-		
-		int i = rand.nextInt((5 - 1) + 1) + 1;
-		return i;
 	}
 }

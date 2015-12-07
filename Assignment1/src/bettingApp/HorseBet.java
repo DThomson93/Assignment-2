@@ -32,6 +32,9 @@ public class HorseBet extends Bet {
 		return type;
 	}
 	
+	/* Much like the FootballBet and BoxingBet methods, this was intended to generate random Horse Races for each venue.
+	 * The amount of work required for ensuring that no duplicates names were shown in each race and in each venue was deemed too much for too little gain.
+	 * Because of this, the idea was scrapped in favour of focusing on core elements of the program.
 	public static String[] randomHorseRace() {
 		String tempHorses[] = {"Easy Goer", "Frankel", "Kincsem", "Man o' War",
 				"Niatross", "Secretariat", "Bernborough", "Crisp", "Valegro", "Ajax"};
@@ -51,4 +54,5 @@ public class HorseBet extends Bet {
 		String sTeam = tempMatch[generateRandom()];
 		return sTeam;
 	}
+	*/
 }

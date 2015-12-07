@@ -35,6 +35,10 @@ public class FootballBet extends Bet {
 		return type;
 	}
 	
+	/* Redundant code that was planning to be used for generating random football/boxing matches in each venue. 
+	 * The idea was that you would pick two teams at random from the String array, check them against each other, and if they weren't the same, assign them to firstTeam and secondTeam.
+	 * Ultimately I decided that while this idea fit the scope of the project, it would have taken away my time from more important aspects of the program such as basic functionality and achieving the goals of the design brief.
+	 * As a result, the idea was scrapped.
 	public static String[] randomFootballMatch() {
 		getFirst();
 		getSecond();
@@ -63,4 +67,5 @@ public class FootballBet extends Bet {
 		String sTeam = tempMatch[generateRandom()];
 		return sTeam;
 	}
+	*/
 }
